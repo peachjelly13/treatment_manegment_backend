@@ -1,40 +1,28 @@
-import mongoose from 'mongoose'
-import { Schema } from 'mongoose'
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
-const userTreatmentSchema = new mongoose.Schema({
-  patientId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Patient',
-  },
-  doctorId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Doctor',
-  },
-  appointmentDate:{
-    type: Date,
-    default: Date.now 
-  },
-  symptoms: {
-    type: String,
-    default: 'Not Specified',
-  },
-  tests: {
-    type: String,
-    default: 'Not Specified',
-  },
-  medicines: {
-    type: String,
-    default: 'Not Specified',
-  },
-  remarks: {
-    type: String,
-    default: 'Not Specified',
-  },
-  doctorSignature: {
-    type: String,
-    default: 'Not Specified',
-  },
-});
+const userTreatmentSchema = new Schema({
+    treatmentId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Treatment',
+        required: true
+    },
+    tests: {
+        type: String,
+        default: 'Not Specified'
+    },
+    medicines: {
+        type: String,
+        default: 'Not Specified'
+    },
+    remarks: {
+        type: String,
+        default: 'Not Specified'
+    },
+    doctorSignature: {
+        type: String,
+        default: 'Not Specified'
+    }
+}, { timestamps: true });
 
-export const UserTreatment =  mongoose.model('UserTreatment', userTreatmentSchema);
+export const UserTreatment = mongoose.model('UserTreatment', userTreatmentSchema);

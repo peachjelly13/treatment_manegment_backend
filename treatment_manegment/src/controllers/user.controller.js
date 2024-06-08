@@ -1,4 +1,4 @@
-import asyncHandler from "../utils/asyncHandler";
+import asyncHandler from "../utils/asyncHandler.js";
 
 
 const registerUser = asyncHandler(async(req,res)=>{
@@ -8,4 +8,13 @@ const registerUser = asyncHandler(async(req,res)=>{
 
 })
 
-export default registerUser
+const loginUser = asyncHandler(async(req,res)=>{
+
+})
+
+const userTreatments = asyncHandler()
+
+export {
+    registerUser,
+    loginUser
+}

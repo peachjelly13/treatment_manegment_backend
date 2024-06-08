@@ -2,19 +2,21 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const treatmentSchema = new Schema({
-    patientId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+    patientName: {
+        type:String,
+        required:true
     },
-    doctorId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Doctor',
-        required: true
+    doctorName:{
+        type:String,
+        required:true
     },
-    appointmentDate: {
+    appointmentDate:{
         type: Date,
         required: true
+    },
+    symptoms:{
+        type:String,
+        required:true
     },
     status: {
         type: String,
