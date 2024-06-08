@@ -1,7 +1,23 @@
-import { mongoose } from "mongoose";
-import { Schema } from "mongoose";
-import jwt from "jsonwebtoken"
-import bcrypt from "bcrypt"
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+
+const sittingHoursSchema = new Schema({
+    day: {
+        type: String,
+        enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        required: true
+    },
+    start_time: {
+        type: String,
+        required: true
+    },
+    end_time: {
+        type: String,
+        required: true
+    }
+});
 
 const doctorSchema = new Schema({
     username:{
@@ -12,10 +28,11 @@ const doctorSchema = new Schema({
         trim:true,
         index:true,
     },
-    specalization:{
+    specialization:{
         type:String,
         required:true,
     },
+    sittingHours: [sittingHoursSchema], // Array of sitting hours
     email:{
         type:String,
         required:true,
@@ -34,28 +51,26 @@ const doctorSchema = new Schema({
         required: true,
         trim: true,
     },
-     
     password:{
         type:String, 
-        required:[true,'Passoword Is Required'] 
+        required:[true,'Password Is Required'] 
     },
     refreshToken:{
         type:String
-
     }
 },{
     timestamps:true  
-})
+});
 
 doctorSchema.pre("save",async function(next){
     if(!this.isModified("password")) return next();
-    this.password = await bcrypt.hash(this.password,10)
+    this.password = await bcrypt.hash(this.password,10);
     next();
-})
+});
 
 doctorSchema.methods.isPasswordCorrect = async function(password){
-    return await bcrypt.compare(password,this.password)
-}
+    return await bcrypt.compare(password,this.password);
+};
 
 doctorSchema.methods.generateAccessToken = function(){
     return jwt.sign({
@@ -68,9 +83,10 @@ doctorSchema.methods.generateAccessToken = function(){
     {
         expiresIn:process.env.ACCESS_TOKEN_EXPIRY
     }
-)
+);
 
-}
+};
+
 doctorSchema.methods.generateRefreshToken = function(){
     return jwt.sign({
         _id:this._id
@@ -79,7 +95,7 @@ doctorSchema.methods.generateRefreshToken = function(){
     {
         expiresIn:process.env.REFRESH_TOKEN_EXPIRY
     }
-)
-    
-}
-export const Doctor = mongoose.model("User",doctorSchema)
+);
+};
+
+export const Doctor = mongoose.model("Doctor",doctorSchema);
