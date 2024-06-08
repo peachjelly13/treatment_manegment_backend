@@ -2,10 +2,14 @@
   "name": "treatment_manegment",
   "version": "1.0.0",
   "description": "manging treatments details of patients",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon src/index.js"
   },
   "author": "Ananya Sharma",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
 }
