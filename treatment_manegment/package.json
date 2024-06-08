@@ -1,0 +1,11 @@
+{
+  "name": "treatment_manegment",
+  "version": "1.0.0",
+  "description": "manging treatments details of patients",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ananya Sharma",
+  "license": "ISC"
+}
