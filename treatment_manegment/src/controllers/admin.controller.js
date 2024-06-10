@@ -148,9 +148,14 @@ const createUserTreatments = asyncHandler(async (req, res) => {
     }
 
     const user = await User.findOne({ username });
+    const doctor = await User.findOne({doctorUserName});
     if (!user) {
         throw new ApiError(404, "User not found");
     }
+    if(!doctor){
+        throw new ApiError(404, "Doctor not found");
+    }
+
     
 
     // Check if the treatment already exists by serialNumber to avoid duplication

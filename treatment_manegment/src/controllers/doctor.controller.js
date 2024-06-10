@@ -111,8 +111,8 @@ const loginDoctor = asyncHandler(async(req,res)=>{
 
 const createUserTreatment = asyncHandler(async(req,res)=>{
     const{patient,doctorUserName,tests,medicines,remarks,doctorSignature} = req.body;
-    const findPatient = User.findOne({username:patient});
-    const findDoctor = User.findOne({username:doctorUserName});
+    const findPatient = await User.findOne({username:patient});
+    const findDoctor = await User.findOne({username:doctorUserName});
     const user = await User.findOne({ username: patient });
 
     if ([patient,doctorUserName, tests, medicines, remarks, 
