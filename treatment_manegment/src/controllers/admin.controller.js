@@ -148,7 +148,7 @@ const createUserTreatments = asyncHandler(async (req, res) => {
     }
 
     const user = await User.findOne({ username });
-    const doctor = await User.findOne({doctorUserName});
+    const doctor = await User.findOne({username:doctorUserName});
     if (!user) {
         throw new ApiError(404, "User not found");
     }
