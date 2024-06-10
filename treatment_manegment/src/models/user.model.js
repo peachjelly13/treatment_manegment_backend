@@ -50,7 +50,8 @@ const userSchema = new Schema({
         enum:['Male','Female','Others'],
         required:true
     },
-    treatments: []
+    treatments: [],
+    userTreatment: []
 
     
 }, { timestamps: true });

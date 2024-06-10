@@ -108,6 +108,45 @@ const loginDoctor = asyncHandler(async(req,res)=>{
                 "User logged in Successfully"
         ) )})
 
+
+const createUserTreatment = asyncHandler(async(req,res)=>{
+    const{patient,doctorUserName,tests,medicines,remarks,doctorSignature} = req.body;
+    const findPatient = User.findOne({username:patient});
+    const findDoctor = User.findOne({username:doctorUserName});
+    const user = await User.findOne({ username: patient });
+
+    if ([patient,doctorUserName, tests, medicines, remarks, 
+        doctorSignature].some((field) => field?.trim() === "")) {
+        throw new ApiError(400, "All fields are required");
+    }
+
+    if(!findPatient){
+        throw new ApiError(404,"No such Patient")
+    }
+    if(!findDoctor){
+        throw new ApiError(404,"No such Doctor")
+    }
+    
+
+    const UserTreatments = {
+        patient,
+        doctorUserName,
+        tests,
+        medicines,
+        remarks,
+        doctorSignature
+    }
+
+    user.userTreatment.push(UserTreatments);
+    await user.save();
+    return res.status(201).json(
+        new ApiResponse(201, UserTreatments, "User Treatment Created successfully")
+    );
+
+
+})
+
+
 const logoutDoctor = asyncHandler(async(req,res)=>{
     await User.findByIdAndUpdate(req.user._id,
         {
@@ -133,6 +172,7 @@ const logoutDoctor = asyncHandler(async(req,res)=>{
 export {
     registerDoctor,
     loginDoctor,
-    logoutDoctor
+    logoutDoctor,
+    createUserTreatment
 
 }

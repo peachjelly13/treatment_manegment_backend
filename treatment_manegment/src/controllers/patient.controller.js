@@ -144,10 +144,25 @@ const getUserTreatments = asyncHandler(async (req, res) => {
     );
 });
 
+const getUserTreatment = asyncHandler(async (req, res) => {
+    const { username } = req.user;
+
+    const user = await User.findOne({ username })
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, user.userTreatment, "Treatments fetched successfully")
+    );
+});
+
+
 export {
     registerPatient,
     loginPatient,
     logoutPatient,
-    getUserTreatments
+    getUserTreatments,
+    getUserTreatment
 
 }

@@ -2,10 +2,9 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const userTreatmentSchema = new Schema({
-    treatmentId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Treatment',
-        required: true
+    patientName:{
+      type:String,
+      required:true
     },
     tests: {
         type: String,
