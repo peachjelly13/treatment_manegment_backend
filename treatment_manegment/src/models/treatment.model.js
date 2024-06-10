@@ -1,34 +1,40 @@
-import mongoose from 'mongoose'
-const { Schema } = mongoose
+import mongoose from 'mongoose';
+
+const { Schema } = mongoose;
 
 const treatmentSchema = new Schema({
-    patientName: {
-        type:String,
-        required:true
+    serialNumber: {
+        type: Number,
+        required: true,
+        unique:true
     },
-    doctorName:{
-        type:String,
-        required:true
+    patient: {
+        type: String,
+        ref:'User'
     },
-    appointmentDate:{
+    doctorUserName: {
+        type: String,
+        required: true,
+    },
+    appointmentDate: {
         type: Date,
-        required: true
+        required: true,
     },
-    symptoms:{
-        type:String,
-        required:true
+    symptoms: {
+        type: String,
+        required: true,
     },
     status: {
         type: String,
         enum: ['pending', 'completed'],
-        default: 'pending'
+        default: 'pending',
     },
-    serialNumber: {
+    age: {
         type: Number,
-        unique: true
-    }
-}, { timestamps: true })
+        required: true,
+    },
+}, { timestamps: true });
 
-export const Treatment = mongoose.model('Treatment', treatmentSchema)
+const Treatment = mongoose.model('Treatment', treatmentSchema);
 
-
+export default Treatment;

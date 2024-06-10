@@ -1,13 +1,22 @@
-import {Router} from 'express'
-import {registerUser}from '../controllers/user.controller.js';
-import {loginUser} from '../controllers/user.controller.js'
+import { Router } from "express";
+import { getUserTreatments, loginPatient, logoutPatient,registerPatient } from'../controllers/patient.controller.js'
+import multer from "multer";
+import verifyUser from "../middleware/auth.middleware.js";
+
 const router = Router();
 
+// Define Multer storage configuration
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
-router.route("/register").post(registerUser)
-router.route("/login").post(loginUser)
-// router.route("/treatments").get(userTreatments)
-// router.route("/treatments/:id").get(getTreatmentById)
-// router.route("/logout").get(logoutUser)
+// Define routes
+router.route("/register").post(upload.none(), registerPatient);
+router.route("/login").post(loginPatient)
+router.route("/logout").post(verifyUser,logoutPatient)
+router.route("/treatments").get(verifyUser,getUserTreatments)
+
+
+//secured routes 
+
 
 export default router;

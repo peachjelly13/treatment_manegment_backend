@@ -9,9 +9,8 @@ const userSchema = new Schema({
         type: String,
         required: true,
         lowercase: true,
-        unique: true,
         trim: true,
-        index: true,
+        
     },
     role: {
         type: String,
@@ -21,7 +20,6 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
         lowercase: true,
         trim: true,
     },
@@ -42,13 +40,19 @@ const userSchema = new Schema({
     },
     refreshToken: {
         type: String
+    },
+    accessToken:{
+        type:String
     }
     ,
     gender:{
         type:String,
         enum:['Male','Female','Others'],
         required:true
-    }
+    },
+    treatments: []
+
+    
 }, { timestamps: true });
 
 userSchema.pre("save", async function(next) {
@@ -57,9 +61,9 @@ userSchema.pre("save", async function(next) {
     next();
 });
 
-userSchema.methods.isPasswordCorrect = async function(password) {
-    return await bcrypt.compare(password, this.password);
-};
+userSchema.methods.isPasswordCorrect = async function(password){
+    return await bcrypt.compare(password,this.password)
+}
 
 userSchema.methods.generateAccessToken = function() {
     return jwt.sign({
